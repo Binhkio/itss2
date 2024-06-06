@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import TagInput from "./tagForm";
+import TagInput from "./tagInput";
 const QuestionForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
