@@ -1,7 +1,7 @@
 "use client"
 
 import { LikeOutlined, MessageOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, List, Skeleton } from "antd";
+import { Avatar, Button, Input, List, Skeleton } from "antd";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -52,6 +52,30 @@ export default function PostDetail() {
     })
   }, []);
 
+  const showComment = (cmt) => {
+    return (
+      <div className="my-2">
+        <div className="flex justify-start items-start gap-x-3">
+          <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
+          <div className="flex flex-col gap-y-1">
+            <div className="font-bold">{data.createdBy}{'\t'}<span className="font-light italic">{data.createdAt}</span></div>
+            <div>{data.content}</div>
+            <div className="flex gap-x-8">
+              <div className="flex justify-start items-center gap-x-1">
+                <LikeOutlined/>
+                <span>{data.likes}</span>
+              </div>
+              <div>Reply</div>
+            </div>
+            <div>
+              {cmt.comments.length > 0 && cmt.comments.map((c) => showComment(c))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex justify-center gap-x-8">
       {data ? (
@@ -85,26 +109,34 @@ export default function PostDetail() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col">
-            <div className="flex flex-col">
-              <div>Trả lời {`(${data.comments.length})`}</div>
-              <div className="flex flex-col">
-                <div className="flex">
-                  
+          <div className="flex flex-col p-8">
+            <div className="flex flex-col gap-y-2">
+              <div className="font-bold text-md">Trả lời {`(${data.comments.length})`}</div>
+              <div className="flex flex-col gap-y-2">
+                <div className="flex gap-4">
+                  <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
+                  <Input.TextArea rows={2} placeholder="Comment..."/>
+                </div>
+                <div className="flex justify-end items-center gap-x-2">
+                  <Button type="primary">Đăng</Button>
+                  <Button danger>Hủy</Button>
                 </div>
               </div>
+            </div>
+            <div className="flex flex-col gap-y-2">
+              {data.comments.length > 0 && data.comments.map((cmt) => showComment(cmt))}
             </div>
           </div>
         </div>
       ) : (
         <Skeleton/>
       )}
-      <div className="w-1/12">
+      <div className="w-1/6 bg-white px-4">
         <List
           header={(
             <div className="flex justify-between">
               <div className="font-bold">Tiêu biểu</div>
-              <div>Xem thêm</div>
+              <div className="underline">Xem thêm</div>
             </div>
           )}
           dataSource={[
