@@ -2,8 +2,11 @@ const Comment = require("../models/Comment");
 const Post = require("../models/Post");
 
 const getAllPosts = async (req, res) => {
+    const { search = "" } = req.query;
     const posts = await Post.find().exec();
-    return res.status(200).json({ message: "Get all posts successfully", data: posts });;
+    return res.status(200).json({
+        message: "Get all posts successfully", data: posts
+    });;
 };
 
 const addPost = async (req, res) => {
