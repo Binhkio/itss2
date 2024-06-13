@@ -28,12 +28,9 @@ const getPost = async (req, res) => {
         return res.status(304).json({ message: "Field required" });
     }
     const post = await Post.findById(id);
-    const fullCmt = [];
-    post.comment.forEach(async (cmt, idx) => {
-        const comment = await Comment.findById(cmt);
-        fullCmt.push(comment);
-    })
-    post.comment = fullCmt;
+    post.comment = await Promise.all(post.comment.map((cmt, idx) => {
+        return Comment.findById(cmt);
+    }))
     if (post) {
         return res.status(200).json(post);
     }

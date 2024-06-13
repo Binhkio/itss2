@@ -27,13 +27,11 @@ export default function PostDetail() {
     }
   }, [id]);
 
-  console.log(data);
-
   const handleAddComment = () => {
     if (!input) return;
     setData({
       ...data,
-      comments: [
+      comment: [
         {
           createdBy: 'You',
           createdAt: moment().format('LLL'),
@@ -66,7 +64,7 @@ export default function PostDetail() {
               <div>Reply</div>
             </div>
             <div>
-              {cmt.comments.length > 0 && cmt.comments.map((c) => showComment(c))}
+              {cmt?.comment && cmt?.comment.length > 0 && cmt?.comment.map((c) => showComment(c))}
             </div>
           </div>
         </div>
