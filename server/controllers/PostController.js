@@ -10,9 +10,9 @@ const addPost = async (req, res) => {
     if (!title || !content) {
         return res.status(304).json({ message: "Field required" });
     }
-    const post = new Post({ title, content, tags });
+    const post = new Post({ title, content, tags, likes: 0, bookmarks: 0 });
     await post.save();
-    return res.status(200).json({ message: "Add question success" });
+    return res.status(200).json({ message: "Add question success!" });
 }
 
 const PostController = {
