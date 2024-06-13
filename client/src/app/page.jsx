@@ -8,7 +8,7 @@ export default function Home() {
         <div style={{fontWeight: "400", fontSize: "32px", lineHeight: "40px"}}>Các Câu Hỏi</div>
         <Button type='primary' size='large'>Tạo Câu Hỏi</Button>
       </div>
-      <div style={{"marginTop": "20px"}}>
+      <div className='mt-8 flex flex-col gap-4'>
         <QuestionCard/>
         <QuestionCard/>
         <QuestionCard/>
