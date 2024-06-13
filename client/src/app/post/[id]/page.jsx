@@ -11,6 +11,8 @@ export default function PostDetail() {
   const [input, setInput] = useState("");
   const { id } = useParams();
 
+  console.log(id)
+
   useEffect(() => {
     setData({
       createdBy: 'Spidartist',
@@ -77,7 +79,7 @@ export default function PostDetail() {
 
   const showComment = (cmt) => {
     return (
-      <div className="my-2">
+      <div className="my-2" key={cmt.createdBy+cmt.createdAt}>
         <div className="flex justify-start items-start gap-x-3">
           <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
           <div className="flex flex-col gap-y-1">
