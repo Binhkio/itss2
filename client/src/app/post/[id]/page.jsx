@@ -2,11 +2,13 @@
 
 import { LikeOutlined, MessageOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Input, List, Skeleton } from "antd";
+import moment from "moment";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PostDetail() {
   const [data, setData] = useState();
+  const [input, setInput] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,30 +20,30 @@ export default function PostDetail() {
       comments: [
         {
           createdBy: 'Spidar',
-          createdAt: '4/6/2024',
+          createdAt: moment('6/3/2024').format('LLL'),
           content: 'Lorem ipsum dolor sit amet!',
           comments: [
             {
               createdBy: 'Spidartist',
-              createdAt: '4/6/2024',
+              createdAt: moment('6/3/2024').format('LLL'),
               content: 'Lorem ipsum dolor sit amet!',
               comments: [],
-              likes: 2
+              likes: 0
             },
           ],
           likes: 2
         },
         {
           createdBy: 'Spidartist',
-          createdAt: '5/6/2024',
+          createdAt: moment('6/5/2024').format('LLL'),
           content: 'Lorem ipsum dolor sit amet!',
           comments: [
             {
               createdBy: 'Spidartist',
-              createdAt: '6/6/2024',
+              createdAt: moment('6/6/2024').format('LLL'),
               content: 'Lorem ipsum dolor sit amet!',
               comments: [],
-              likes: 2
+              likes: 1
             },
           ],
           likes: 2
@@ -52,18 +54,39 @@ export default function PostDetail() {
     })
   }, []);
 
+  const handleAddComment = () => {
+    if (!input) return;
+    setData({
+      ...data,
+      comments: [
+        {
+          createdBy: 'You',
+          createdAt: moment().format('LLL'),
+          content: input,
+          comments: [],
+          likes: 0
+        },
+        ...data.comments,
+      ]
+    })
+  }
+
+  const handleCancel = () => {
+    setInput("");
+  }
+
   const showComment = (cmt) => {
     return (
       <div className="my-2">
         <div className="flex justify-start items-start gap-x-3">
           <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
           <div className="flex flex-col gap-y-1">
-            <div className="font-bold">{data.createdBy}{'\t'}<span className="font-light italic">{data.createdAt}</span></div>
-            <div>{data.content}</div>
+            <div className="font-bold">{cmt.createdBy}{'\t'}<span className="font-light italic">{cmt.createdAt}</span></div>
+            <div>{cmt.content}</div>
             <div className="flex gap-x-8">
               <div className="flex justify-start items-center gap-x-1">
                 <LikeOutlined/>
-                <span>{data.likes}</span>
+                <span>{cmt.likes}</span>
               </div>
               <div>Reply</div>
             </div>
@@ -115,11 +138,11 @@ export default function PostDetail() {
               <div className="flex flex-col gap-y-2">
                 <div className="flex gap-4">
                   <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
-                  <Input.TextArea rows={2} placeholder="Comment..."/>
+                  <Input.TextArea rows={2} placeholder="Comment..." value={input} onChange={e => setInput(e.target.value)}/>
                 </div>
                 <div className="flex justify-end items-center gap-x-2">
-                  <Button type="primary">Đăng</Button>
-                  <Button danger>Hủy</Button>
+                  <Button type="primary" onClick={handleAddComment}>Đăng</Button>
+                  <Button danger onClick={handleCancel}>Hủy</Button>
                 </div>
               </div>
             </div>
