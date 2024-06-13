@@ -6,10 +6,11 @@ import QuestionForm from '@/components/QuestionForm';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DEFAULT_URL } from '../../config';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Home() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const router = useRouter();
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
 
@@ -20,8 +21,9 @@ export default function Home() {
     }
   }
   useEffect(() => {
+    router.push('/');
     fetchData();
-  }, [searchParams]);
+  }, []);
 
   return (
     <div style={{maxWidth: "600px", margin: "auto", paddingTop: "30px"}}>
@@ -32,7 +34,7 @@ export default function Home() {
       <div className='mt-8 flex flex-col gap-4'>
         {(data && data.length > 0)
         ? data
-          .filter((e,i) => e?.title?.includes(search) || e?.tags?.findIndex(p => p?.includes(search)) > -1)
+          .filter((e,i) => search ? (e?.title?.includes(search) || e?.tags?.findIndex(p => p?.includes(search)) > -1) : true)
           .map((e,i) => <QuestionCard question={e} key={e?._id + i} />)
         : <Empty/>}
       </div>
