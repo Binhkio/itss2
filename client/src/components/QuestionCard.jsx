@@ -8,20 +8,11 @@ import {
   UserOutlined,
   AntDesignOutlined,
 } from "@ant-design/icons";
-import { Avatar, Tooltip } from "antd";
+import { Avatar, Skeleton, Tooltip } from "antd";
 
-const QuestionCard = () => {
-  return (
-    <div
-      style={{
-        width: "560px",
-        height: "160px",
-        backgroundColor: "#ffffff",
-        borderRadius: "1px",
-        marginTop: "20px",
-        padding: "20px",
-      }}
-    >
+const QuestionCard = ({ question }) => {
+  return !question ? (
+    <div className="w-[560px] h[160px] rounded-md p-4" style={{backgroundColor: "#ffffff",}}>
       <div style={{ display: "flex", gap: "20px" }}>
         <Avatar size={40} icon={<UserOutlined />} />
         <div>
@@ -73,7 +64,7 @@ const QuestionCard = () => {
         </div>
       </div>
     </div>
-  );
+  ) : (<Skeleton/>);
 };
 
 export default QuestionCard;
