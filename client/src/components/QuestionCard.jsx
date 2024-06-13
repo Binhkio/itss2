@@ -12,7 +12,7 @@ import { Avatar, Skeleton, Tooltip } from "antd";
 
 const QuestionCard = ({ question }) => {
   return !question ? (
-    <div className="w-[560px] h[160px] rounded-md p-4">
+    <div className="w-[560px] h[160px] rounded-md p-4" style={{backgroundColor: "#ffffff",}}>
       <div style={{ display: "flex", gap: "20px" }}>
         <Avatar size={40} icon={<UserOutlined />} />
         <div>
