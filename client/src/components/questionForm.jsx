@@ -2,17 +2,31 @@
 
 import React, { useState } from "react";
 import TagInput from "./tagInput";
-import { Button, Modal } from "antd";
-const QuestionForm = ({ children }) => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+import { Button, Modal, Select, notification } from "antd";
+import { DEFAULT_URL, TAGS_SAMPLE } from "../../config";
+import axios from "axios";
+const QuestionForm = ({ refetch }) => {
+  const [title, setTitle] = useState("Câu hỏi mẫu 001");
+  const [content, setContent] = useState("Đây là một câu hỏi mẫu");
   const [tags, setTags] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Xử lý dữ liệu form tại đây
-    console.log({ title, content, tags });
+    try {
+      const res = await axios.post(`${DEFAULT_URL}/posts/add`, {
+        title,
+        content,
+        tags,
+      });
+      if (res && res.status === 200) {
+        notification.success(res.data);
+        refetch();
+      } 
+    } catch (error) {
+      notification.error({ message: error?.message });
+    }
     setOpen(false);
   };
 
@@ -62,7 +76,24 @@ const QuestionForm = ({ children }) => {
               required
             ></textarea>
           </div>
-          <TagInput />
+          <label
+            htmlFor="content"
+            className="block text-gray-700 font-medium mb-2"
+          >
+            Tags
+          </label>
+          <Select
+            allowClear
+            mode="tags"
+            placeholder="Tags.."
+            options={TAGS_SAMPLE.map(tag => ({
+              label: tag,
+              value: tag,
+            }))}
+            onChange={(value) => setTags(value)}
+            value={tags}
+            className="w-1/2"
+          />
         </form>
       </Modal>
     </div>

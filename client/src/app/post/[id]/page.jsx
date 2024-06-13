@@ -2,9 +2,11 @@
 
 import { LikeOutlined, MessageOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Input, List, Skeleton } from "antd";
+import axios from "axios";
 import moment from "moment";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { DEFAULT_URL } from "../../../../config";
 
 export default function PostDetail() {
   const [data, setData] = useState();
@@ -13,48 +15,19 @@ export default function PostDetail() {
 
   console.log(id)
 
+  async function fetchData() {
+    const res = await axios.get(`${DEFAULT_URL}/post/${id}`);
+    if (res && res.status === 200) {
+      setData(res.data);
+    }
+  }
   useEffect(() => {
-    setData({
-      createdBy: 'Spidartist',
-      createdAt: '3/6/2024',
-      title: 'Câu hỏi về nguyên lý lập trình Hướng đối tượng',
-      content: 'Các huynh cho đệ hỏi các thành phần chính trong Lập trình hướng đối tượng là gì ạ',
-      comments: [
-        {
-          createdBy: 'Spidar',
-          createdAt: moment('6/3/2024').format('LLL'),
-          content: 'Lorem ipsum dolor sit amet!',
-          comments: [
-            {
-              createdBy: 'Spidartist',
-              createdAt: moment('6/3/2024').format('LLL'),
-              content: 'Lorem ipsum dolor sit amet!',
-              comments: [],
-              likes: 0
-            },
-          ],
-          likes: 2
-        },
-        {
-          createdBy: 'Spidartist',
-          createdAt: moment('6/5/2024').format('LLL'),
-          content: 'Lorem ipsum dolor sit amet!',
-          comments: [
-            {
-              createdBy: 'Spidartist',
-              createdAt: moment('6/6/2024').format('LLL'),
-              content: 'Lorem ipsum dolor sit amet!',
-              comments: [],
-              likes: 1
-            },
-          ],
-          likes: 2
-        }
-      ],
-      likes: 3,
-      marks: 48,
-    })
-  }, []);
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  console.log(data);
 
   const handleAddComment = () => {
     if (!input) return;
@@ -68,7 +41,7 @@ export default function PostDetail() {
           comments: [],
           likes: 0
         },
-        ...data.comments,
+        ...data.comment,
       ]
     })
   }
@@ -122,7 +95,7 @@ export default function PostDetail() {
             <div className="flex justify-start items-center gap-x-4">
               <div className="flex justify-start items-center gap-x-1">
                 <MessageOutlined/>
-                <span>{data.comments.length}</span>
+                <span>{data.comment.length}</span>
               </div>
               <div className="flex justify-start items-center gap-x-1">
                 <LikeOutlined/>
@@ -136,7 +109,7 @@ export default function PostDetail() {
           </div>
           <div className="flex flex-col p-8">
             <div className="flex flex-col gap-y-2">
-              <div className="font-bold text-md">Trả lời {`(${data.comments.length})`}</div>
+              <div className="font-bold text-md">Trả lời {`(${data.comment.length})`}</div>
               <div className="flex flex-col gap-y-2">
                 <div className="flex gap-4">
                   <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
@@ -149,7 +122,7 @@ export default function PostDetail() {
               </div>
             </div>
             <div className="flex flex-col gap-y-2">
-              {data.comments.length > 0 && data.comments.map((cmt) => showComment(cmt))}
+              {data.comment.length > 0 && data.comment.map((cmt) => showComment(cmt))}
             </div>
           </div>
         </div>
