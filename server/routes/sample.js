@@ -2,7 +2,8 @@ var express = require('express');
 const SampleController = require('../controllers/SampleController');
 var router = express.Router();
 
-router.get('/user', SampleController.getAllUser);
-router.post('/user/add', SampleController.addUser);
+router.get('/', (req, res) => {
+return res.send("OK");
+});
 
 module.exports = router;
