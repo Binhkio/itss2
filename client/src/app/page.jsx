@@ -2,7 +2,7 @@
 
 import QuestionCard from '../components/QuestionCard';
 import { Button, Empty, Flex } from 'antd';
-import QuestionForm from '../components/QuestionForm';
+import QuestionForm from '../components/questionForm';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DEFAULT_URL } from '../../config';
