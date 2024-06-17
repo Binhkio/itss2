@@ -113,7 +113,7 @@ export default function PostDetail() {
       ) : (
         <Skeleton/>
       )}
-      <div className="w-1/6 bg-white px-4">
+      {/* <div className="w-1/6 bg-white px-4">
         <List
           header={(
             <div className="flex justify-between">
@@ -132,7 +132,7 @@ export default function PostDetail() {
             </List.Item>
           )}
         />
-      </div>
+      </div> */}
     </div>
   );
 }
