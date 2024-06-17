@@ -12,7 +12,7 @@ export default function Home() {
   const [data, setData] = useState([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const search = searchParams.get('search');
+  const search = searchParams.get('search')?.toLowerCase();
 
   async function fetchData() {
     const res = await axios.get(`${DEFAULT_URL}/posts`);
@@ -34,7 +34,7 @@ export default function Home() {
       <div className='mt-8 flex flex-col gap-4'>
         {(data && data.length > 0)
         ? data
-          .filter((e,i) => search ? (e?.title?.includes(search) || e?.tags?.findIndex(p => p?.includes(search)) > -1) : true)
+          .filter((e,i) => search ? (e?.title?.toLowerCase().includes(search) || e?.tags?.findIndex(p => p?.toLowerCase().includes(search)) > -1) : true)
           .map((e,i) => <QuestionCard question={e} key={e?._id + i} />)
         : <Empty/>}
       </div>

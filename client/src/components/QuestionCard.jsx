@@ -15,7 +15,7 @@ import Link from "next/link";
 const QuestionCard = ({ question }) => {
   return question ? (
     <Link href={`post/${question?._id}`}>
-      <div className="w-[560px] h[160px] rounded-lg p-4" style={{backgroundColor: "#ffffff",}}>
+      <div className="w-auto h[160px] rounded-lg p-4" style={{backgroundColor: "#ffffff",}}>
         <div style={{ display: "flex", gap: "20px" }}>
           <Avatar size={40} icon={<UserOutlined />} />
           <div>
@@ -49,20 +49,8 @@ const QuestionCard = ({ question }) => {
         >
           <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
             <CommentOutlined style={{ fontSize: "24px" }} /> {question?.comment?.length}
-            <LikeOutlined style={{ fontSize: "24px" }} /> {question.likes}
-            <TagOutlined style={{ fontSize: "24px" }} /> {question.bookmarks}
-          </div>
-          <div>
-          <Avatar.Group>
-        <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />
-        <a href="https://ant.design">
-          <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-        </a>
-        <Tooltip title="Ant User" placement="top">
-          <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-        </Tooltip>
-        <Avatar style={{ backgroundColor: '#1677ff' }} icon={<AntDesignOutlined />} />
-      </Avatar.Group>
+            {/* <LikeOutlined style={{ fontSize: "24px" }} /> {question.likes}
+            <TagOutlined style={{ fontSize: "24px" }} /> {question.bookmarks} */}
           </div>
         </div>
       </div>

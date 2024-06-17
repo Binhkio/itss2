@@ -53,8 +53,8 @@ export default function PostDetail() {
       <div className="my-2" key={cmt.createdBy+cmt.createdAt}>
         <div className="flex justify-start items-start gap-x-3">
           <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
-          <div className="flex flex-col gap-y-1">
-            <div className="font-bold">{cmt.createdBy}{'\t'}<span className="font-light italic">{cmt.createdAt}</span></div>
+          <div className="flex flex-col gap-y-1 w-9/12">
+            <div className="font-bold">{cmt.createdBy}{'\t'}<span className="font-light italic">{moment(cmt.createdAt).format('LLL')}</span></div>
             <div>{cmt.content}</div>
             <div className="flex gap-x-8">
               <div className="flex justify-start items-center gap-x-1">
@@ -81,7 +81,7 @@ export default function PostDetail() {
               <Avatar style={{ backgroundColor: 'yellowgreen' }} size={"large"} icon={<UserOutlined/>} />
               <div className="flex flex-col">
                 <div className="font-bold">{data.createdBy}</div>
-                <div>{data.createdAt}</div>
+                <div>{moment(data.createdAt).format('LLL')}</div>
               </div>
             </div>
             <div className="font-bold text-2xl">
@@ -89,20 +89,6 @@ export default function PostDetail() {
             </div>
             <div className="">
               {data.content}
-            </div>
-            <div className="flex justify-start items-center gap-x-4">
-              <div className="flex justify-start items-center gap-x-1">
-                <MessageOutlined/>
-                <span>{data.comment.length}</span>
-              </div>
-              <div className="flex justify-start items-center gap-x-1">
-                <LikeOutlined/>
-                <span>{data.likes}</span>
-              </div>
-              <div className="flex justify-start items-center gap-x-1">
-                <SnippetsOutlined/>
-                <span>{data.marks}</span>
-              </div>
             </div>
           </div>
           <div className="flex flex-col p-8">
