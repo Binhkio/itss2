@@ -27,8 +27,8 @@ const Header = () => {
 				<Input.Search onSearch={handleSearch} size="large" placeholder="Tìm kiếm" allowClear />
 			</div>
 			<div style={{"display": "flex", "alignItems": "center", justifyContent: "space-between", gap: "20px"}}>
-				<CommentOutlined style={{fontSize: "32px"}}/>
-				<NotificationOutlined style={{fontSize: "32px"}}/>
+				{/* <CommentOutlined style={{fontSize: "32px"}}/>
+				<NotificationOutlined style={{fontSize: "32px"}}/> */}
 				<Avatar size={32} icon={<UserOutlined />} />
 			</div>
 		</div>
